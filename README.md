@@ -39,6 +39,23 @@ Delivery Service App Backend
     - request has been authorized by guard
     - auth_decorate find user and return user Info.
 
+## Restaurant Construction:
+
+- Entity:
+
+  - name
+  - category
+  - address
+  - coverImage
+
+- Functions
+
+  - Pagination
+    - See Restaurants
+  - Create/Edit/Delete Restaurant (Role based)
+  - Create/Edit/Delete Dish (Role based)
+  - Search Restaurants (Role based)
+
 - <b>Unit Test</b>
 
   - Jest

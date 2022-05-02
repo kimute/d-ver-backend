@@ -2,7 +2,7 @@ import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Verification } from './entities/verification.entity';
-import { UsersService } from './users.service';
+import { UserService } from './users.service';
 import { JwtService } from 'src/jwt/jwt.service';
 import { MailService } from 'src/mail/mail.service';
 import { Repository } from 'typeorm';
@@ -28,7 +28,7 @@ const mockMailService = {
 type mockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
 
 describe('UsersService', () => {
-  let service: UsersService;
+  let service: UserService;
   let usersRepository: mockRepository<User>;
   let VerificationRepository: mockRepository<Verification>;
   let mailService: MailService;
@@ -37,7 +37,7 @@ describe('UsersService', () => {
   beforeEach(async () => {
     const module = await Test.createTestingModule({
       providers: [
-        UsersService,
+        UserService,
         {
           //from TypeORM testing
           provide: getRepositoryToken(User),
