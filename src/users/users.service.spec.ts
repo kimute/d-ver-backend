@@ -27,7 +27,7 @@ const mockMailService = {
 //partial: make all properties optional
 type mockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
 
-describe('UsersService', () => {
+describe('UserService', () => {
   let service: UserService;
   let usersRepository: mockRepository<User>;
   let VerificationRepository: mockRepository<Verification>;
@@ -57,7 +57,7 @@ describe('UsersService', () => {
         },
       ],
     }).compile();
-    service = module.get<UsersService>(UsersService);
+    service = module.get<UserService>(UserService);
     usersRepository = module.get(getRepositoryToken(User));
     VerificationRepository = module.get(getRepositoryToken(Verification));
     mailService = module.get<MailService>(MailService);

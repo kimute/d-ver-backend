@@ -6,7 +6,7 @@ import { Restaurant } from '../entities/restaurant.entity';
 @InputType()
 export class CreateReataurantInput extends PickType(Restaurant, [
   'name',
-  'coverImage',
+  'coverImg',
   'address',
 ]) {
   @Field(() => String)

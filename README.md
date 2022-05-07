@@ -54,6 +54,7 @@ Delivery Service App Backend
     - See Restaurants
   - Create/Edit/Delete Restaurant (Role based)
   - Create/Edit/Delete Dish (Role based)
+  - Order Dish
   - Search Restaurants (Role based)
 
 - <b>Unit Test</b>
