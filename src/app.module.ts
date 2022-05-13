@@ -24,6 +24,9 @@ import { Order } from './orders/entities/order.entity';
 import { OrdersModule } from './orders/orders.module';
 import { OrderItem } from './orders/entities/order-item.entity';
 import { CommonModule } from './common/common.module';
+import { PaymentsModule } from './payments/payments.module';
+import { Payment } from './payments/entities/payment.entity';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -62,24 +65,13 @@ import { CommonModule } from './common/common.module';
         Dish,
         Order,
         OrderItem,
+        Payment,
       ],
     }),
     GraphQLModule.forRoot({
       driver: ApolloDriver,
       autoSchemaFile: true,
       installSubscriptionHandlers: true,
-      // context: ({ req, connection }) => {
-      //   const TOKEN_KEY = 'x-jwt';
-      //   return {
-      //     token: req ? req.headers[TOKEN_KEY] : connection.context[TOKEN_KEY],
-      //   };
-      //   // if (req) {
-      //   //   return { user: req['user'] };
-      //   // } else {
-      //   //   console.log('================>', connection);
-      //   // }
-      // },
-      // from jwt millde ware
       subscriptions: {
         'subscriptions-transport-ws': {
           onConnect: (connectionParams) => {
@@ -89,12 +81,13 @@ import { CommonModule } from './common/common.module';
               throw new Error('Token is not valid');
             }
             const token = authToken;
-            return {token}//connectionParams;
+            return { token }; //connectionParams;
           },
         },
       },
-    context: ({ req }) => ({ token: req.headers['x-jwt'] })
+      context: ({ req }) => ({ token: req.headers['x-jwt'] }),
     }),
+    ScheduleModule.forRoot(),
     JwtModule.forRoot({ privateKey: process.env.PRIVATE_KEY }),
     MailModule.forRoot({
       apiKey: process.env.MAILGUN_API,
@@ -106,6 +99,7 @@ import { CommonModule } from './common/common.module';
     RestaurantModule,
     OrdersModule,
     CommonModule,
+    PaymentsModule,
   ],
   controllers: [],
   providers: [],

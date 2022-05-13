@@ -31,22 +31,48 @@ Delivery Service App Backend
   - password (hash)
   - JWT
   - role(Client|Owner|Delivery)
-  - Authentication flow:
-    - send Token to Header -> hit middleware
-    - middleware(token decrypt & verify) -> add user request Object
-    - request Object into graphql context -> guard
-    - guard find graphql context if user exist or not
-    - request has been authorized by guard
-    - auth_decorate find user and return user Info.
 
-## Restaurant & Order Construction:
+- Authentication flow:
+  - send Token to Header -> hit middleware
+  - middleware(token decrypt & verify) -> add user request Object
+  - request Object into graphql context -> guard
+  - guard find graphql context if user exist or not
+  - request has been authorized by guard
+  - auth_decorate find user and return user Info.
+
+## Restaurant & Order/Dish Construction:
 
 - Entity:
 
-  - name
-  - category
-  - address
-  - coverImage
+  - Restaurant
+
+    - name
+    - category
+    - address
+    - coverImage
+    - address
+    - orders
+    - dish
+    - ownerId
+    - menu
+
+  - Order
+
+    - user
+    - customer
+    - driver
+    - restaurant
+    - items
+    - total
+    - status
+
+  - Dish
+
+    - name
+    - price
+    - photo
+    - description
+    - restaurantId
 
 - Functions
 
@@ -69,6 +95,25 @@ Delivery Service App Backend
   - Driever(Delivery):Pending pickup Orders
     - this function for only Driever
     - when order cooked Delivery listening orderUpdate
+
+## Payment:
+
+- Entity:
+
+  - transactionId
+    - when owner create payment, transactionId is sent
+  - user
+  - userId
+  - restaurantId
+
+- Paddle: Payments system | https://www.paddle.com/
+
+- Task Scheduling
+
+  - restaurant promotion
+  - module:
+    - @nestjs/schedule
+    - @types/cron
 
 - <b>Unit Test</b>
 
