@@ -23,6 +23,7 @@ import { Dish } from './restaurant/entities/dish.entity';
 import { Order } from './orders/entities/order.entity';
 import { OrdersModule } from './orders/orders.module';
 import { OrderItem } from './orders/entities/order-item.entity';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -53,12 +54,46 @@ import { OrderItem } from './orders/entities/order-item.entity';
       synchronize: process.env.NODE_ENV !== 'prod',
       logging:
         process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== 'test',
-      entities: [User, Verification, Restaurant, Category, Dish, Order, OrderItem],
+      entities: [
+        User,
+        Verification,
+        Restaurant,
+        Category,
+        Dish,
+        Order,
+        OrderItem,
+      ],
     }),
     GraphQLModule.forRoot({
       driver: ApolloDriver,
       autoSchemaFile: true,
-      context: ({ req }) => ({ user: req['user'] }), // from jwt millde ware
+      installSubscriptionHandlers: true,
+      // context: ({ req, connection }) => {
+      //   const TOKEN_KEY = 'x-jwt';
+      //   return {
+      //     token: req ? req.headers[TOKEN_KEY] : connection.context[TOKEN_KEY],
+      //   };
+      //   // if (req) {
+      //   //   return { user: req['user'] };
+      //   // } else {
+      //   //   console.log('================>', connection);
+      //   // }
+      // },
+      // from jwt millde ware
+      subscriptions: {
+        'subscriptions-transport-ws': {
+          onConnect: (connectionParams) => {
+            console.log('connectionParams', connectionParams);
+            const authToken = connectionParams['x-jwt'];
+            if (!authToken) {
+              throw new Error('Token is not valid');
+            }
+            const token = authToken;
+            return {token}//connectionParams;
+          },
+        },
+      },
+    context: ({ req }) => ({ token: req.headers['x-jwt'] })
     }),
     JwtModule.forRoot({ privateKey: process.env.PRIVATE_KEY }),
     MailModule.forRoot({
@@ -70,16 +105,17 @@ import { OrderItem } from './orders/entities/order-item.entity';
     UsersModule,
     RestaurantModule,
     OrdersModule,
+    CommonModule,
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule implements NestModule {
+export class AppModule {
   //the way apply middleware(in this case Jwtmiddleware)
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(JwtMiddleware).forRoutes({
-      path: '/graphql',
-      method: RequestMethod.POST,
-    });
-  }
+  // configure(consumer: MiddlewareConsumer) {
+  //   consumer.apply(JwtMiddleware).forRoutes({
+  //     path: '/graphql',
+  //     method: RequestMethod.POST,
+  //   });
+  //}
 }

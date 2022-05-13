@@ -39,7 +39,7 @@ Delivery Service App Backend
     - request has been authorized by guard
     - auth_decorate find user and return user Info.
 
-## Restaurant Construction:
+## Restaurant & Order Construction:
 
 - Entity:
 
@@ -56,6 +56,19 @@ Delivery Service App Backend
   - Create/Edit/Delete Dish (Role based)
   - Order Dish
   - Search Restaurants (Role based)
+  - Order and Subscriptions
+  - use graphql-subscriptions
+  - Owner: pendig Orders
+    - trigger: createOrder
+      - restaurant owner listening newOeder event
+      - when food is ready(by owner) and ready to pickup, then trigger ceareOrder
+  - Customer:
+    - Order Status (customer, Delivery, Owner)
+    - trigger:editOrder -> orderupdate
+      - customer,owner listening orderUpdate event
+  - Driever(Delivery):Pending pickup Orders
+    - this function for only Driever
+    - when order cooked Delivery listening orderUpdate
 
 - <b>Unit Test</b>
 
