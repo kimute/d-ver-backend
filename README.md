@@ -6,7 +6,7 @@
 
 Delivery Service App Backend
 
-## Using
+## Use the follow dependencies
 
 - GraphQL
 - cross-env
