@@ -31,6 +31,7 @@ import { Category } from './entities/category.entity';
 import { Dish } from './entities/dish.entity';
 import { Restaurant } from './entities/restaurant.entity';
 import { CategoryRepository } from './repositories/category.repository';
+import { MyRestaurantsOutput } from './dtos/my-restaurants.dto';
 
 // here write somthig for DB
 @Injectable()
@@ -373,6 +374,20 @@ export class RestaurantService {
       return {
         ok: false,
         error: 'delete dish failed',
+      };
+    }
+  }
+  async myRestaurants(owner: User): Promise<MyRestaurantsOutput> {
+    try {
+      const restaurants = await this.restaurants.find({ owner });
+      return {
+        restaurants,
+        ok: true,
+      };
+    } catch {
+      return {
+        ok: false,
+        error: 'Could not find restaurants.',
       };
     }
   }
