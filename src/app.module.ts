@@ -27,6 +27,7 @@ import { CommonModule } from './common/common.module';
 import { PaymentsModule } from './payments/payments.module';
 import { Payment } from './payments/entities/payment.entity';
 import { ScheduleModule } from '@nestjs/schedule';
+import { UploadsModule } from './uploads/uploads.module';
 
 @Module({
   imports: [
@@ -45,6 +46,8 @@ import { ScheduleModule } from '@nestjs/schedule';
         MAILGUN_API: Joi.string(),
         MAILGUN_DOMAIN_NAME: Joi.string(),
         MAILGUN_FROM_EMAI: Joi.string(),
+        AWS_ACCESS_KEY: Joi.string().required(),
+        AWS_SECRET_ACCESS_KEY: Joi.string().required(),
       }),
     }),
     TypeOrmModule.forRoot({
@@ -100,6 +103,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     OrdersModule,
     CommonModule,
     PaymentsModule,
+    UploadsModule,
   ],
   controllers: [],
   providers: [],

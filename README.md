@@ -4,7 +4,17 @@
 
 ## Description
 
-Delivery Service App Backend
+Delivery Service App Backend with nestJS
+
+what is nestJS ?
+
+- a framework for building efficient, scalable Node.js server-side applications.
+
+why nestJS?
+
+- fully supports TypeScript
+- BE architecture can be well organized and managed through configuration and dependency injection (DI) divided into controllers, services, and modules.
+- it is easier to use than Express
 
 ## Use the follow dependencies
 
@@ -18,6 +28,7 @@ Delivery Service App Backend
 - jsonwebtoken, types/jsonwebtoken
 - Postgre v2.5.6 / postico
 - Mailgun: for email verification
+- aws-sdk
 
 ## User Construction:
 
@@ -95,6 +106,7 @@ Delivery Service App Backend
   - Driever(Delivery):Pending pickup Orders
     - this function for only Driever
     - when order cooked Delivery listening orderUpdate
+  - fileUpload(AWS S3)
 
 ## Payment:
 
